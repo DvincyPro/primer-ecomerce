@@ -26,7 +26,6 @@ const productData = [
       isNew: true,
       category: "Electronics",
     },
-  
     {
       _id: 102,
       title: "DJI Air",

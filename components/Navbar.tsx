@@ -6,6 +6,8 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import NavbarBottom from "./NavbarBottom";
+import Link from "next/link";
+
 
 const Navbar = () => {
   return (
@@ -13,9 +15,11 @@ const Navbar = () => {
       <div className="w-full h-full border-b-[1px] border-b-lightBlue ">
         <div className=" max-w-container mx-auto h-20 px-4 flex items-center justify-between  gap-2 ">
           {/*--------Logo start here------------*/}
-          <div className="navBarHover">
-            <Image src={logo} className="w-44" alt="logo" />
-          </div>
+          <Link href="/" passHref >
+            <div className="navBarHover">
+              <Image src={logo} className="w-44" alt="logo" />
+            </div>
+          </Link>
           {/*--------Logo end here--------------*/}
           {/*--------Departments start here-----*/}
           <div className="navBarHover">
@@ -71,13 +75,13 @@ const Navbar = () => {
           </div>
           {/*--------Accounts end here----------*/}
           {/*--------Cart start here------------*/}
-          <div className=" flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 cursor-pointer relative ">
+          <Link passHref href="/Cart" className=" flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 cursor-pointer relative ">
             <BsCart2 className=" text-2xl " />
             <p className=" text-[10px] -mt-2 ">$0.00</p>
             <span className=" absolute w-4 h-4 bg-yellow text-neutral-900 top-0 right-4 rounded-full flex items-center justify-center text-xs font-bodyFont ">
               0
             </span>
-          </div>
+          </Link>
           {/*--------Cart end here*-------------*/}
           {/*---------------------------------  */}
         </div>

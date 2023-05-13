@@ -1,19 +1,14 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import Head from "next/head";
-import Navbar from "../../components/Navbar";
 import Banner from "../../components/Banner";
 import { Product } from "../../type";
 import Products from "../../components/Products";
-import Footer from "../../components/Footer";
-import { TopFooter } from "../../components/TopFooter";
 
 // acá se obtiene la interface desde Products from '../../components/Products'
 interface Props {
   productData: Product[];
 }
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ productData }: Props) {
   return (
@@ -28,14 +23,12 @@ export default function Home({ productData }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Navbar />
         <div className=" max-w-contentContainer mx-auto  bg-[#fff] ">
           <Banner />
           {/* acá se le pasa los datos de la api al majnejador de la data, para manejarla, Products se maneja desde otro archivo */}
           <Products productData={productData} />
         </div>
-        <TopFooter />
-        <Footer />
+        
       </main>
     </>
   );
