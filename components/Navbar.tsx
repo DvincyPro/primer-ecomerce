@@ -7,9 +7,25 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import NavbarBottom from "./NavbarBottom";
 import Link from "next/link";
-
+import { useSelector } from "react-redux";
+import {useState, useEffect} from "react";
 
 const Navbar = () => {
+  // acá se empieza a manejar el carrito
+  const productData = useSelector((state: any)=>state.shopper.productData);
+  const [totalAmt, SetTotalAmt] = useState("")
+
+  useEffect(() => {
+   let price = 0;
+   productData.map((item:any)=>{
+    price += item.price * item.quantity
+    return price
+   })
+   SetTotalAmt(price.toFixed(2))
+  },[productData])
+  
+
+
   return (
     <div className="w-full  bg-blue text-neutral-100 sticky top-0 z-50  ">
       <div className="w-full h-full border-b-[1px] border-b-lightBlue ">
@@ -47,7 +63,7 @@ const Navbar = () => {
           <div className=" h-10 flex flex-1 relative ">
             <input
               type="text"
-              className="h-full bg-neutral-100 w-full rounded-full px-4 text-neutral-900 text-base outline-none border-[1px] border-transparent focus-visible:border-ligthText duration-200"
+              className="h-full  bg-neutral-100 w-full rounded-full px-4 text-neutral-900 text-base outline-none border-[1px] border-transparent focus-visible:border-ligthText duration-200"
               placeholder="Busque lo que desee en Quantum Marker"
             />
             <span className=" absolute w-8 h-8 rounded-full flex items-center justify-center top-1 right-1 bg-yellow text-ligthText text-xl ">
@@ -77,9 +93,10 @@ const Navbar = () => {
           {/*--------Cart start here------------*/}
           <Link passHref href="/Cart" className=" flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-hoverBg duration-300 cursor-pointer relative ">
             <BsCart2 className=" text-2xl " />
-            <p className=" text-[10px] -mt-2 ">$0.00</p>
+            <p className=" text-[10px] -mt-2 ">${totalAmt}</p>
             <span className=" absolute w-4 h-4 bg-yellow text-neutral-900 top-0 right-4 rounded-full flex items-center justify-center text-xs font-bodyFont ">
-              0
+              {/* esto se obtiene de shopperSlice.tsx que es el que maneja el carrito */}
+              {productData.length > 0 ? productData.length:0}
             </span>
           </Link>
           {/*--------Cart end here*-------------*/}

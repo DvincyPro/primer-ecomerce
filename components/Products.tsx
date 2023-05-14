@@ -4,9 +4,11 @@ import Image from "next/image";
 import { GoPlus } from "react-icons/go";
 import { BsStarFill } from "react-icons/bs";
 import Link from "next/link";
-
+import { useDispatch } from "react-redux";
+import { addTocart } from "../redux/shopperSlice";
 
 const Products = ({ productData }: any) => {
+  const dispatch = useDispatch();
   return (
     <div className=" py-6 px-4 grid grid-cols-4 gap-4 ">
       {productData.map((item: Item) => (
@@ -25,7 +27,17 @@ const Products = ({ productData }: any) => {
               {/* Boton de añadir al carito y details */}
               <div className="flex justify-between py-2 ">
                 {/* add to cart */}
-                <button className=" w-20 h-9 bg-blue text-neutral-100 rounded-full gap-1 items-center justify-center hover:bg-[#004f9a] duration-300 flex">
+                <button onClick={()=>dispatch(addTocart({
+                  _id: item._id,
+                  title: item.title,
+                  description: item.description,
+                  image: item.image,
+                  price: item.price,
+                  oldPrice: item.oldPrice,
+                  quantity: 1,
+                  brand: item.brand,
+                  category: item.category,
+                }))} className=" w-20 h-9 bg-blue text-neutral-100 rounded-full gap-1 items-center justify-center hover:bg-[#004f9a] duration-300 flex">
                   <span>
                     <GoPlus />
                   </span>
@@ -33,7 +45,7 @@ const Products = ({ productData }: any) => {
                 </button>
                 {/* acá se hace un query para pasarle las propiedades en un futuro a los elementos individuales y que sean usados en los detalles en una página individual */}
                 <Link
-                  passHref               
+                  passHref
                   href={{
                     pathname: `/product/${item._id}`,
                     query: {

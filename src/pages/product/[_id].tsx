@@ -4,10 +4,15 @@ import React, { useEffect, useState } from "react";
 import { Item } from "../../../type";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsInfoCircle, BsStarFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { addTocart } from "../../../redux/shopperSlice";
 import { GoPlus } from "react-icons/go";
+import { useSelector } from "react-redux";
 import { ship1Img, ship2Img, ship3Img } from "../../../public/assets/images";
 
 const ProductDatails = () => {
+  const dispatch = useDispatch();
+  // acá se manejan las propiedades del router query para invicar las propiedades de la card, se invocan desde Products.tsx desde un query que hay ahí
   const router = useRouter();
   const [product, setProduct] = useState<any>({});
   const [isLoading, setLoading] = useState(false);
@@ -88,7 +93,17 @@ const ProductDatails = () => {
               </p>
             </div>
             {/* add to cart */}
-            <div className=" border-b-[1px] pb-2 border-neutral-700 ">
+            <div onClick={()=>dispatch(addTocart({
+                  _id: product._id,
+                  title: product.title,
+                  description: product.description,
+                  image: product.image,
+                  price: product.price,
+                  oldPrice: product.oldPrice,
+                  quantity: 1,
+                  brand: product.brand,
+                  category: product.category,
+                }))} className=" border-b-[1px] pb-2 border-neutral-700 ">
               <button className=" w-44 h-9  bg-blue text-neutral-100 rounded-full gap-1 items-center justify-center hover:bg-[#004f9a] duration-300 flex">
                 <span>
                   <GoPlus />

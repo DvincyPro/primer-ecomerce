@@ -36,6 +36,7 @@ export default function Home({ productData }: Props) {
 
 // ======================== SSR data fetching start here======================== //
 export const getServerSideProps = async () => {
+  // const response = await fetch("http://localhost:3000//api/productdata");
   const response = await fetch("https://primer-ecomerce.vercel.app/api/productdata");
   const productData = await response.json();
   return {
