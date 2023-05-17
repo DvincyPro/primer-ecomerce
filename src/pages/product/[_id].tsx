@@ -9,6 +9,7 @@ import { addTocart } from "../../../redux/shopperSlice";
 import { GoPlus } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { ship1Img, ship2Img, ship3Img } from "../../../public/assets/images";
+import toast, { Toaster } from "react-hot-toast";
 
 const ProductDatails = () => {
   const dispatch = useDispatch();
@@ -93,17 +94,27 @@ const ProductDatails = () => {
               </p>
             </div>
             {/* add to cart */}
-            <div onClick={()=>dispatch(addTocart({
-                  _id: product._id,
-                  title: product.title,
-                  description: product.description,
-                  image: product.image,
-                  price: product.price,
-                  oldPrice: product.oldPrice,
-                  quantity: 1,
-                  brand: product.brand,
-                  category: product.category,
-                }))} className=" border-b-[1px] pb-2 border-neutral-700 ">
+            <div
+              onClick={() =>
+                dispatch(
+                  addTocart({
+                    _id: product._id,
+                    title: product.title,
+                    description: product.description,
+                    image: product.image,
+                    price: product.price,
+                    oldPrice: product.oldPrice,
+                    quantity: 1,
+                    brand: product.brand,
+                    category: product.category,
+                  })
+                )&&
+                toast.success(
+                  `${product.title.substring(0, 20)} is added to cart`
+                )
+              }
+              className=" border-b-[1px] pb-2 border-neutral-700 "
+            >
               <button className=" w-44 h-9  bg-blue text-neutral-100 rounded-full gap-1 items-center justify-center hover:bg-[#004f9a] duration-300 flex">
                 <span>
                   <GoPlus />
@@ -145,13 +156,22 @@ const ProductDatails = () => {
                 </div>
               </div>
             </div>
-          <p className=" font-bold text-xs " >
-            Sacramento, 95829
-            <span className=" font-normal underline underline-offset-2 ml-2 " >Change</span>
-          </p>
+            <p className=" font-bold text-xs ">
+              Sacramento, 95829
+              <span className=" font-normal underline underline-offset-2 ml-2 ">
+                Change
+              </span>
+            </p>
           </div>
         </div>
       </div>
+      <Toaster
+        reverseOrder={false}
+        position="top-center"
+        toastOptions={{
+          style: { borderRadius: "8px", background: "#333", color: "#fff" },
+        }}
+      />
     </div>
   );
 };

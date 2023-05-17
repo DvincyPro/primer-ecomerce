@@ -6,6 +6,7 @@ import { BsStarFill } from "react-icons/bs";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addTocart } from "../redux/shopperSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const Products = ({ productData }: any) => {
   const dispatch = useDispatch();
@@ -27,17 +28,27 @@ const Products = ({ productData }: any) => {
               {/* Boton de añadir al carito y details */}
               <div className="flex justify-between py-2 ">
                 {/* add to cart */}
-                <button onClick={()=>dispatch(addTocart({
-                  _id: item._id,
-                  title: item.title,
-                  description: item.description,
-                  image: item.image,
-                  price: item.price,
-                  oldPrice: item.oldPrice,
-                  quantity: 1,
-                  brand: item.brand,
-                  category: item.category,
-                }))} className=" w-20 h-9 bg-blue text-neutral-100 rounded-full gap-1 items-center justify-center hover:bg-[#004f9a] duration-300 flex">
+                <button
+                  onClick={() =>
+                    dispatch(
+                      addTocart({
+                        _id: item._id,
+                        title: item.title,
+                        description: item.description,
+                        image: item.image,
+                        price: item.price,
+                        oldPrice: item.oldPrice,
+                        quantity: 1,
+                        brand: item.brand,
+                        category: item.category,
+                      })
+                    ) &&
+                    toast.success(
+                      `${item.title.substring(0, 20)} is added to cart`
+                    )
+                  }
+                  className=" w-20 h-9 bg-blue text-neutral-100 rounded-full gap-1 items-center justify-center hover:bg-[#004f9a] duration-300 flex"
+                >
                   <span>
                     <GoPlus />
                   </span>
@@ -96,6 +107,13 @@ const Products = ({ productData }: any) => {
           </div>
         </div>
       ))}
+      <Toaster
+        reverseOrder={false}
+        position="top-center"
+        toastOptions={{
+          style: { borderRadius: "8px", background: "#333", color: "#fff" },
+        }}
+      />
     </div>
   );
 };
