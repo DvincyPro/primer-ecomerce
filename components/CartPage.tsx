@@ -21,8 +21,16 @@ import {
   resetCart,
   plusQuantity,
 } from "../redux/shopperSlice";
+import { useSession } from "next-auth/react";
 
 const CartPage = () => {
+  // acá es el para el usuario y contraseña
+  const { data: session } = useSession();
+
+  const handleCheckout = () => {
+    console.log("done");
+  }
+  const userInfo = useSelector((state: any) => state.shopper.userInfo);
   // este es el dispatch
   const dispatch = useDispatch();
 
@@ -222,12 +230,21 @@ const CartPage = () => {
           {/* esta es la parte de arriba del box de la derecha */}
           <div className=" w-full flex flex-col gap-4 border-b-[1px] border-b-neutral-600 pb-4 ">
             {/* boton para empezar el checking */}
-            <button className=" bg-blue hover:bg-hoverBg w-full text-[#fff] h-10 rounded-full font-semibold duration-300 ">
-              Continuar al Checkout
-            </button>
-            <p className=" text-sm text-center text-[#FE2E2E] -mt-4 font-semibold ">
-              Please sing in for Checkout{" "}
-            </p>
+            {session ? (
+              <button onClick={handleCheckout} className=" bg-blue hover:bg-hoverBg w-full text-[#fff] h-10 rounded-full font-semibold duration-300 ">
+                Continuar al Checkout
+              </button>
+            ) : (
+              <button className=" bg-blue bg-opacity-50 cursor-not-allowed w-full text-[#fff] h-10 rounded-full font-semibold duration-300 ">
+                Continuar al Checkout
+              </button>
+            )}
+            {/* este mensaje solo estará disponible si no se han logueado */}
+            {!session && (
+              <p className=" text-sm text-center text-[#FE2E2E] -mt-4 font-semibold ">
+                Please sing in for Checkout{" "}
+              </p>
+            )}
             {/* mensaje de alerta */}
             {warnigMsg && (
               <div className=" bg-[#002d58] text-[#fff] p-2 rounded-lg flex items-center justify-between gap-4 ">

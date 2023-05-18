@@ -9,8 +9,11 @@ import NavbarBottom from "./NavbarBottom";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import {useState, useEffect} from "react";
+import { useSession, signIn,signOut  } from "next-auth/react";
+
 
 const Navbar = () => {
+  const { data: session } = useSession();
   // acá se empieza a manejar el carrito
   const productData = useSelector((state: any)=>state.shopper.productData);
   const [totalAmt, SetTotalAmt] = useState("")
@@ -83,10 +86,28 @@ const Navbar = () => {
           {/*--------My Items end here----------*/}
           {/*--------Accounts start here--------*/}
           <div className=" navBarHover">
-            <AiOutlineUser className="text-lg" />
+          <Image
+              width={100}
+              height={100}
+              className="w-8 h-8 rounded-full"
+              src={session && session.user && session.user.image ? session.user.image :"/img/usuario.jpeg"}
+              alt="logo"
+            />
+            
             <div>
-              <p className="text-xs">Sing In</p>
-              <h2 className="text-base font-semibold -mt-1">Account</h2>
+            {session ? (
+            <button
+              onClick={() => signOut()}
+              className="uppercase text-sm border-[1px] border-primaryColor  px-4 py-1 font-semibold hover:text-white rounded-md hover:bg-cyan-950 transition-all duration-300 active:bg-yellow-600"
+            >Sign Out</button>
+          ) : (
+            <button
+              onClick={() => signIn()}
+              className="uppercase text-sm border-[1px] border-primaryColor  px-4 py-1 font-semibold hover:text-white rounded-md hover:bg-cyan-950 transition-all duration-300 active:bg-yellow-600"
+            >
+              Sign In
+            </button>
+          )}
             </div>
           </div>
           {/*--------Accounts end here----------*/}

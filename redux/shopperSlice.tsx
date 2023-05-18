@@ -58,10 +58,16 @@ export const shopperSlice = createSlice({
     resetCart: (state) => {
       state.productData = [];
     },
+    addUser: (state,action)=>{
+      state.productData = action.payload;
+    },
+    removeUser: (state)=>{
+      state.userInfo = null;
+    }
   },
 });
 
 // exportamos la acción "addTocart" que creamos anteriormente para que pueda ser utilizada en otros lugares de nuestra aplicación
-export const { addTocart, deleteItem, plusQuantity, minusQuantity, resetCart } = shopperSlice.actions;
+export const { addTocart, deleteItem, plusQuantity, minusQuantity, resetCart,addUser,removeUser } = shopperSlice.actions;
 // exportamos nuestro slice para que pueda ser utilizado en nuestra store
 export default shopperSlice.reducer;
