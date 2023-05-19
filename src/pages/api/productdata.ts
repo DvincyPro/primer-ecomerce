@@ -103,7 +103,7 @@ const productData = [
       description:
         "St Patricks Day T-Shirt Men -Image by Shutterstock, Male XX-Large",
       oldPrice: 15.0,
-      price: 18.99,
+      price: 18.09,
       brand: "Smartprints",
       image: "https://i.ibb.co/BLCDw7v/3.webp",
       isNew: true,
@@ -226,7 +226,7 @@ const productData = [
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since",
       oldPrice: 29.0,
-      price: 19.97,
+      price: 19.90,
       brand: "Neutrogena",
       image: "https://i.ibb.co/zmw8xFY/top7.webp",
       isNew: true,

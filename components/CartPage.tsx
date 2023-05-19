@@ -22,26 +22,46 @@ import {
   plusQuantity,
 } from "../redux/shopperSlice";
 import { useSession } from "next-auth/react";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+
+
+const stripePromise = loadStripe(String(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY));
 
 const CartPage = () => {
+  ////////////////////////////////////////////////////////
   // acá es el para el usuario y contraseña
   const { data: session } = useSession();
+  // acá es para empezar a hacer el stripe
+  
+  const handleCheckout = async() => {
+    const stripe = await stripePromise;
 
-  const handleCheckout = () => {
-    console.log("done");
+    // create cheackout sesion 
+    const cheackoutSession = await axios.post("api/create-cheackout-session",{
+      items:productData,
+      email: session?.user?.email
+    })
+    // redireccionar al usuario para el chechout con stripe
+    const result:any = await stripe?.redirectToCheckout({
+      sessionId: cheackoutSession.data.id,
+    })
+    if(result?.error) alert(result?.error.message)
   }
+  
+  ////////////////////////////////////////////////////
   const userInfo = useSelector((state: any) => state.shopper.userInfo);
   // este es el dispatch
   const dispatch = useDispatch();
 
   // esto es todo la funcion del carrito
   const productData = useSelector((state: any) => state.shopper.productData);
-
+/////////////////////////////////////////////////////////////
   // price
   const [totalOldPrice, setTotalOldPrice] = useState(0);
   const [totalSavings, setTotalSavings] = useState(0);
   const [totalAmt, setTotalAmt] = useState(0);
-
+/////////////////////////////////////////////////////////
   // warnig message
   const [warnigMsg, setwarnigMsg] = useState(false);
   // acá se maneja el total de los productos y el warning message
